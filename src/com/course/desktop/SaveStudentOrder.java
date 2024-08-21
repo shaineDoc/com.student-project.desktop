@@ -6,11 +6,10 @@ import com.course.desktop.domain.StudentOrder;
 public class SaveStudentOrder {
     public static void main(String[] args) {
 
-        StudentOrder so = new StudentOrder(); // создаём объект и присваиваем имена
-
-
-       long ans = saveStudentOrder(so);
-        System.out.println(ans);
+        buildStudentOrder();
+//        StudentOrder so = new StudentOrder(); // создаём объект и присваиваем имена
+//        long ans = saveStudentOrder(so);
+//        System.out.println(ans);
 
     }
     // Сохраняем заявку и присваиваем порядковый номер
@@ -22,8 +21,13 @@ public class SaveStudentOrder {
     static StudentOrder buildStudentOrder() {
         StudentOrder so = new StudentOrder();
         Adult husband = new Adult();
-        husband.setGivenName("Вячеслав");
+        husband.setGivenName("Иван");
+        husband.setSurName("Иванов");
+        husband.setPassportNumber("554455");
         so.setHusband(husband);
+
+        String ans = husband.getPersonString();
+        System.out.println(ans);
 
         return so;
     }

@@ -3,13 +3,15 @@ package com.course.desktop.domain;
 import java.time.LocalDate;
 
 public class Person {
-    private String surName;
-    private String givenName;
+    protected String surName;
+    protected String givenName;
     private String patronymic;
     private LocalDate birthDay;
     private Address address;
-    public String getPersonString () {
-        return surName + " " + givenName ;
+
+
+    public String getPersonString() {
+        return surName + " " + givenName;
     }
 
 
@@ -52,11 +54,6 @@ public class Person {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-
-
-
-
 
 
 }
