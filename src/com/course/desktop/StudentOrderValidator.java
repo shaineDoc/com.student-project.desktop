@@ -8,68 +8,85 @@ import com.course.desktop.validator.StudentValidator;
 import com.course.desktop.validator.WeddingValidator;
 
 public class StudentOrderValidator {
-    public static void main(String[] args) {
-        checkAll();
+    private CityRegisterValidator cityRegisterVal;
+    private WeddingValidator weddingVal;
+    private ChildrenValidator childrenVal;
+    private StudentValidator studentVal;
+    private MailSender mailSender;
+
+    public StudentOrderValidator() {
+        cityRegisterVal = new CityRegisterValidator();
+        weddingVal = new WeddingValidator();
+        childrenVal = new ChildrenValidator();
+        studentVal = new StudentValidator();
+        mailSender = new MailSender();
     }
 
-    static void checkAll() {
+    public static void main(String[] args) {
+        StudentOrderValidator sov = new StudentOrderValidator();
+        sov.checkAll();
+    }
 
-        while (true) {
-            StudentOrder so = readStudentOrder();
-            if (so == null) {
-                break;
-            }
-
-            AnswerCityRegister cityAnswer = checkCityRegister(so);
-            if (!cityAnswer.success) {
-                break;
-
-                //continue;
-            }
-            AnswerWedding wedAnswer = checkWedding(so);
-            AnswerChildren childAnswer = checkChildren(so);
-            AnswerStudent studAnswer = checkStudent(so);
-
-            sendMail(so);
+    public void checkAll() {
+        StudentOrder[] soArray = readStudentOrders();
+        for (StudentOrder so : soArray) {
+            System.out.println();
+            checkStudent(so);
         }
+//        for (int i = 0; i < soArray.length; i++) {
+//            System.out.println();
+//            checkOneOrder(soArray[i]);
+//        }
     }
 
 
     // читаем поступившие заявки
-    static StudentOrder readStudentOrder() {
-        StudentOrder so = new StudentOrder();
-        return so;
+    public StudentOrder[] readStudentOrders() {
+        StudentOrder[] soArray = new StudentOrder[3];
+
+        for (int c = 0; c < soArray.length; c++) {
+            soArray[c] = SaveStudentOrder.buildStudentOrder(c);
+
+        }
+        return soArray;
+
+    }
+
+    // Проверка поступивших заявок
+    public void checkOneOrder(StudentOrder so) {
+        AnswerCityRegister cityAnswer = checkCityRegister(so);
+
+        AnswerWedding wedAnswer = checkWedding(so);
+        AnswerChildren childAnswer = checkChildren(so);
+        AnswerStudent studAnswer = checkStudent(so);
+
+        sendMail(so);
+
     }
 
     // Проверяем адрес регистрации
-    static AnswerCityRegister checkCityRegister(StudentOrder so) {
-        CityRegisterValidator crv1 = new CityRegisterValidator();
-        crv1.hostName = "Host1";
-        AnswerCityRegister answerCityRegister1 = crv1.checkCityRegister(so);
-        return answerCityRegister1;
+    public AnswerCityRegister checkCityRegister(StudentOrder so) {
+        return cityRegisterVal.checkCityRegister(so);
 
     }
 
     //  Проверка брака
-    static AnswerWedding checkWedding(StudentOrder so) {
-        WeddingValidator wd = new WeddingValidator();
-        return wd.checkWedding(so);
+    public AnswerWedding checkWedding(StudentOrder so) {
+        return weddingVal.checkWedding(so);
     }
 
     // проверка на наличие детей
-    static AnswerChildren checkChildren(StudentOrder so) {
-        ChildrenValidator cv = new ChildrenValidator();
-        return cv.checkChildren(so);
+    public AnswerChildren checkChildren(StudentOrder so) {
+        return childrenVal.checkChildren(so);
     }
 
     //  Проверка на причастность к студентчеству
-    static AnswerStudent checkStudent(StudentOrder so) {
-        StudentValidator sv = new StudentValidator();
-        return sv.checkStudent(so);
+    public AnswerStudent checkStudent(StudentOrder so) {
+        return studentVal.checkStudent(so);
     }
 
     // отправка какого-то ответа по заявке
-    static void sendMail(StudentOrder so) {
-        new MailSender().sendMail(so);
+    public void sendMail(StudentOrder so) {
+        mailSender.sendMail(so);
     }
 }
