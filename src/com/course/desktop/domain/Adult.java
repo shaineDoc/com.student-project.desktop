@@ -5,7 +5,12 @@ import java.time.LocalDate;
 public class Adult extends Person {
     private String pasportSeria;
     private String passportNumber;
-    private String issueDate;
+
+    public void setIssueDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    private LocalDate issueDate;
     private String issueDepartment;
     private String university;
     private String studentId;
@@ -44,13 +49,6 @@ public class Adult extends Person {
         this.issueDepartment = issueDepartment;
     }
 
-    public String getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(String issueDate) {
-        this.issueDate = issueDate;
-    }
 
     public String getPassportNumber() {
         return passportNumber;

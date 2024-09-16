@@ -1,7 +1,11 @@
 package com.course.desktop.validator;
 
 import com.course.desktop.domain.AnswerCityRegister;
+import com.course.desktop.domain.CityRegisterCheckerResponse;
 import com.course.desktop.domain.StudentOrder;
+import com.course.desktop.exception.CityRegisterException;
+import com.course.desktop.validator.register.CityRegisterChecker;
+import com.course.desktop.validator.register.FakeCityRegisterChecker;
 
 public class CityRegisterValidator {
 
@@ -17,10 +21,13 @@ public class CityRegisterValidator {
     }
 
     public AnswerCityRegister checkCityRegister(StudentOrder so) {
-
-        personChecker.checkPerson(so.getHusband());
-        personChecker.checkPerson(so.getWife());
-        personChecker.checkPerson(so.getChild());
+        try {
+            CityRegisterCheckerResponse hans = personChecker.checkPerson(so.getHusband());
+            CityRegisterCheckerResponse wans = personChecker.checkPerson(so.getWife());
+            CityRegisterCheckerResponse cans = personChecker.checkPerson(so.getChild());
+        } catch (CityRegisterException ex) {
+            ex.printStackTrace();
+        }
 
         AnswerCityRegister ans = new AnswerCityRegister();
         return ans;

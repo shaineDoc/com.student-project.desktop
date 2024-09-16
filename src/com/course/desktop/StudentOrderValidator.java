@@ -29,63 +29,53 @@ public class StudentOrderValidator {
 
     public void checkAll() {
         StudentOrder[] soArray = readStudentOrders();
-        for (StudentOrder so : soArray) {
+
+        for(int c = 0; c < soArray.length; c++) {
             System.out.println();
-            checkStudent(so);
+            checkOneOrder(soArray[c]);
         }
-//        for (int i = 0; i < soArray.length; i++) {
+
+//        for(StudentOrder so : soArray) {
 //            System.out.println();
-//            checkOneOrder(soArray[i]);
+//            checkOneOrder(so);
 //        }
     }
 
-
-    // читаем поступившие заявки
     public StudentOrder[] readStudentOrders() {
-        StudentOrder[] soArray = new StudentOrder[3];
+        StudentOrder[] soArray = new StudentOrder[1];
 
         for (int c = 0; c < soArray.length; c++) {
             soArray[c] = SaveStudentOrder.buildStudentOrder(c);
-
         }
-        return soArray;
 
+        return soArray;
     }
 
-    // Проверка поступивших заявок
     public void checkOneOrder(StudentOrder so) {
         AnswerCityRegister cityAnswer = checkCityRegister(so);
-
-        AnswerWedding wedAnswer = checkWedding(so);
-        AnswerChildren childAnswer = checkChildren(so);
-        AnswerStudent studAnswer = checkStudent(so);
-
-        sendMail(so);
-
+//        AnswerWedding wedAnswer = checkWedding(so);
+//        AnswerChildren childAnswer = checkChildren(so);
+//        AnswerStudent studentAnswer = checkStudent(so);
+//
+//        sendMail(so);
     }
 
-    // Проверяем адрес регистрации
     public AnswerCityRegister checkCityRegister(StudentOrder so) {
         return cityRegisterVal.checkCityRegister(so);
-
     }
 
-    //  Проверка брака
     public AnswerWedding checkWedding(StudentOrder so) {
         return weddingVal.checkWedding(so);
     }
 
-    // проверка на наличие детей
     public AnswerChildren checkChildren(StudentOrder so) {
         return childrenVal.checkChildren(so);
     }
 
-    //  Проверка на причастность к студентчеству
     public AnswerStudent checkStudent(StudentOrder so) {
         return studentVal.checkStudent(so);
     }
 
-    // отправка какого-то ответа по заявке
     public void sendMail(StudentOrder so) {
         mailSender.sendMail(so);
     }
