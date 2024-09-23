@@ -3,13 +3,8 @@ package com.course.desktop.domain;
 import java.time.LocalDate;
 
 public class Adult extends Person {
-    private String pasportSeria;
+    private String passportSeria;
     private String passportNumber;
-
-    public void setIssueDate(LocalDate issueDate) {
-        this.issueDate = issueDate;
-    }
-
     private LocalDate issueDate;
     private String issueDepartment;
     private String university;
@@ -20,25 +15,28 @@ public class Adult extends Person {
         super(surName, givenName, patronymic, birthDay);
     }
 
-
-    public String getPersonString() {
-        return surName + " " + givenName + " " + passportNumber;
+    public String getPassportSeria() {
+        return passportSeria;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public void setPassportSeria(String passportSeria) {
+        this.passportSeria = passportSeria;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public String getPassportNumber() {
+        return passportNumber;
     }
 
-    public String getUniversity() {
-        return university;
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
     }
 
-    public void setUniversity(String university) {
-        this.university = university;
+    public LocalDate getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
     }
 
     public String getIssueDepartment() {
@@ -49,21 +47,19 @@ public class Adult extends Person {
         this.issueDepartment = issueDepartment;
     }
 
-
-    public String getPassportNumber() {
-        return passportNumber;
+    public String getUniversity() {
+        return university;
     }
 
-    public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
+    public void setUniversity(String university) {
+        this.university = university;
     }
 
-    public String getPasportSeria() {
-        return pasportSeria;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setPasportSeria(String pasportSeria) {
-        this.pasportSeria = pasportSeria;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
-
 }

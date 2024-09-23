@@ -2,25 +2,23 @@ package com.course.desktop.domain;
 
 import java.time.LocalDate;
 
-public abstract class Person {
-    protected String surName;
-    protected String givenName;
+public abstract class Person
+{
+    private String surName;
+    private String givenName;
     private String patronymic;
-    private LocalDate birthDay;
+    private LocalDate dateOfBirth;
     private Address address;
 
-    public Person(String surName, String givenName, String patronymic, LocalDate birthDay) {
+    public Person() {
+    }
+
+    public Person(String surName, String givenName, String patronymic, LocalDate dateOfBirth) {
         this.surName = surName;
         this.givenName = givenName;
         this.patronymic = patronymic;
-        this.birthDay = birthDay;
-
+        this.dateOfBirth = dateOfBirth;
     }
-
-    public String getPersonString() {
-        return surName + " " + givenName;
-    }
-
 
     public String getSurName() {
         return surName;
@@ -46,12 +44,12 @@ public abstract class Person {
         this.patronymic = patronymic;
     }
 
-    public LocalDate getBirthDay() {
-        return birthDay;
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setBirthDay(LocalDate birthDay) {
-        this.birthDay = birthDay;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Address getAddress() {
@@ -61,6 +59,4 @@ public abstract class Person {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-
 }

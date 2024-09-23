@@ -1,6 +1,6 @@
 package com.course.desktop.validator;
 
-import com.course.desktop.domain.AnswerStudent;
+import com.course.desktop.domain.student.AnswerStudent;
 import com.course.desktop.domain.StudentOrder;
 
 public class StudentValidator {

@@ -1,5 +1,9 @@
 package com.course.desktop;
 
+import com.course.desktop.domain.children.AnswerChildren;
+import com.course.desktop.domain.register.AnswerCityRegister;
+import com.course.desktop.domain.student.AnswerStudent;
+import com.course.desktop.domain.wedding.AnswerWedding;
 import com.course.desktop.mail.MailSender;
 import com.course.desktop.domain.*;
 import com.course.desktop.validator.ChildrenValidator;
@@ -7,7 +11,11 @@ import com.course.desktop.validator.CityRegisterValidator;
 import com.course.desktop.validator.StudentValidator;
 import com.course.desktop.validator.WeddingValidator;
 
-public class StudentOrderValidator {
+import java.util.LinkedList;
+import java.util.List;
+
+public class StudentOrderValidator
+{
     private CityRegisterValidator cityRegisterVal;
     private WeddingValidator weddingVal;
     private ChildrenValidator childrenVal;
@@ -28,35 +36,31 @@ public class StudentOrderValidator {
     }
 
     public void checkAll() {
-        StudentOrder[] soArray = readStudentOrders();
+        List<StudentOrder> soList = readStudentOrders();
 
-        for(int c = 0; c < soArray.length; c++) {
-            System.out.println();
-            checkOneOrder(soArray[c]);
+        for(StudentOrder so : soList) {
+            checkOneOrder(so);
         }
-
-//        for(StudentOrder so : soArray) {
-//            System.out.println();
-//            checkOneOrder(so);
-//        }
     }
 
-    public StudentOrder[] readStudentOrders() {
-        StudentOrder[] soArray = new StudentOrder[1];
+    public List<StudentOrder> readStudentOrders() {
+        List<StudentOrder> soList = new LinkedList<>();
 
-        for (int c = 0; c < soArray.length; c++) {
-            soArray[c] = SaveStudentOrder.buildStudentOrder(c);
+        for (int c = 0; c < 5; c++) {
+            StudentOrder so = SaveStudentOrder.buildStudentOrder(c);
+            soList.add(so);
         }
 
-        return soArray;
+        return soList;
     }
 
     public void checkOneOrder(StudentOrder so) {
         AnswerCityRegister cityAnswer = checkCityRegister(so);
+
 //        AnswerWedding wedAnswer = checkWedding(so);
 //        AnswerChildren childAnswer = checkChildren(so);
 //        AnswerStudent studentAnswer = checkStudent(so);
-//
+
 //        sendMail(so);
     }
 
