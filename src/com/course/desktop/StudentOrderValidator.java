@@ -53,7 +53,6 @@ public class StudentOrderValidator
 
         return soList;
     }
-
     public void checkOneOrder(StudentOrder so) {
         AnswerCityRegister cityAnswer = checkCityRegister(so);
 

@@ -5,11 +5,23 @@ import com.course.desktop.domain.Adult;
 import com.course.desktop.domain.Child;
 import com.course.desktop.domain.StudentOrder;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 
 public class SaveStudentOrder
 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        Class.forName("org.postgresql.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/",
+                "postgres","admin");
+        Statement stmt = connection.createStatement();
+        ResultSet rs =  stmt.executeQuery("SELECT * FROM jc_street");
+        while (rs.next()) {
+            System.out.println(rs.getLong(1) + ": " + rs.getString(2));
+        }
         StudentOrder s = buildStudentOrder(10);
 //        StudentOrder so = new StudentOrder();
 //        long ans = saveStudentOrder(so);
@@ -54,7 +66,7 @@ public class SaveStudentOrder
         child1.setIssueDate(LocalDate.of(2018, 7, 19));
         child1.setIssueDepartment("Отдел ЗАГС №" + id);
         child1.setAddress(address);
-        // Ребенок
+        // Ребенок 2
         Child child2 = new Child("Петров", "Евгений", "Викторович", LocalDate.of(2018, 6, 29));
         child2.setCertificateNumber("" + (400000 + id));
         child2.setIssueDate(LocalDate.of(2018, 7, 19));
@@ -67,5 +79,6 @@ public class SaveStudentOrder
         so.addChild(child2);
 
         return so;
+        // ТЕСТ ВЫГРУЗКИ НА ГИТ
     }
 }
