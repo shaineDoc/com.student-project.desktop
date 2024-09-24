@@ -5,11 +5,24 @@ import com.course.desktop.domain.Adult;
 import com.course.desktop.domain.Child;
 import com.course.desktop.domain.StudentOrder;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 
 public class SaveStudentOrder
 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        Class.forName("org.postgresql.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/",
+        "postgres","admin");
+        Statement stmt = connection.createStatement();
+       ResultSet rs =  stmt.executeQuery("SELECT * FROM jc_street");
+       while (rs.next()) {
+           System.out.println(rs.getLong(1) + ": " + rs.getString(2));
+       }
+
         StudentOrder s = buildStudentOrder(10);
 //        StudentOrder so = new StudentOrder();
 //        long ans = saveStudentOrder(so);
@@ -67,6 +80,6 @@ public class SaveStudentOrder
         so.addChild(child2);
 
         return so;
-        // ТЕСТ ВЫГРУЗКИ НА ГИТ
+
     }
 }
