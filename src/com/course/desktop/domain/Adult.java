@@ -1,6 +1,6 @@
 package com.course.desktop.domain;
 
-import com.course.desktop.dao.PassportOffice;
+import com.course.desktop.offices.PassportOffice;
 
 import java.time.LocalDate;
 

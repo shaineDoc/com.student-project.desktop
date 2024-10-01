@@ -1,33 +1,48 @@
 package com.course.desktop;
 
-import com.course.desktop.dao.DictionaryDaoImpl;
-import com.course.desktop.dao.PassportOffice;
+import com.course.desktop.dao.StudentOrderDao;
+import com.course.desktop.dao.StudentOrderDaoImp;
+import com.course.desktop.offices.PassportOffice;
 import com.course.desktop.domain.*;
+import com.course.desktop.offices.RegisterOffice;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.List;
 
 public class SaveStudentOrder
 {
     public static void main(String[] args) throws Exception{
-        List<Street> d = new DictionaryDaoImpl().findStreets("ка");
-        for(Street s : d) {
-            System.out.println(s.getStreetName());
-        }
-      List <PassportOffice> po =   new DictionaryDaoImpl().findPassportOffice("010020000000");
-        for(PassportOffice p : po) {
-            System.out.println(p.getOfficeName());
-        }
-        List <RegisterOffice> ro =   new DictionaryDaoImpl().findRegisterOffice("010010000000");
-        for( RegisterOffice r : ro) {
-            System.out.println(r.getOfficeName());
-        }
-
+//        List<Street> d = new DictionaryDaoImpl().findStreets("ст");
+//        for(Street s : d) {
+//            System.out.println(s.getStreetName());
+//        }
+//      List <PassportOffice> po =   new DictionaryDaoImpl().findPassportOffice("010020000000");
+//        for(PassportOffice p : po) {
+//            System.out.println(p.getOfficeName());
+//        }
+//        List <RegisterOffice> ro =   new DictionaryDaoImpl().findRegisterOffice("010010000000");
+//        for( RegisterOffice r : ro) {
+//            System.out.println(r.getOfficeName());
+//        }
+//        List <CountryArea> ca1 =   new DictionaryDaoImpl().findAreas("");
+//        for( CountryArea countryArea : ca1) {
+//            System.out.println(countryArea.getAreaId() + ":" + countryArea.getAreaName());
+//        }
+//        List <CountryArea> ca2 =   new DictionaryDaoImpl().findAreas("020000000000");
+//        for( CountryArea countryArea : ca2) {
+//            System.out.println(countryArea.getAreaId() + ":" + countryArea.getAreaName());
+//        }
+//        List <CountryArea> ca3 =   new DictionaryDaoImpl().findAreas("020010000000");
+//        for( CountryArea countryArea : ca3) {
+//            System.out.println(countryArea.getAreaId() + ":" + countryArea.getAreaName());
+//        }
+//        List <CountryArea> ca4 =   new DictionaryDaoImpl().findAreas("020010010000");
+//        for( CountryArea countryArea : ca4) {
+//            System.out.println(countryArea.getAreaId() + ":" + countryArea.getAreaName());
+//        }
         StudentOrder s = buildStudentOrder(10);
+        StudentOrderDao dao = new StudentOrderDaoImp();
+        Long id =  dao.saveStudentOrder(s);
+        System.out.println(id);
 //        StudentOrder so = new StudentOrder();
 //        long ans = saveStudentOrder(so);
 //        System.out.println(ans);
@@ -45,7 +60,7 @@ public class SaveStudentOrder
         so.setStudentOrderId(id);
         so.setMarriageCertificateId("" + (123456000 + id));
         so.setMarriageDate(LocalDate.of(2016, 7, 4));
-        RegisterOffice regOffice = new RegisterOffice(1,"","");
+        RegisterOffice regOffice = new RegisterOffice(1L,"","");
         so.setMarriageOffice(regOffice);
 
         Street street = new Street(1L,"First street");

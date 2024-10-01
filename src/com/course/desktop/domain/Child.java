@@ -1,5 +1,7 @@
 package com.course.desktop.domain;
 
+import com.course.desktop.offices.RegisterOffice;
+
 import java.time.LocalDate;
 
 public class Child extends Person {
