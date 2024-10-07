@@ -76,6 +76,8 @@ public class SaveStudentOrder
         husband.setIssueDepartment(ps);
         husband.setStudentId("" + (100000 + id));
         husband.setAddress(address);
+        husband.setUniversity(new University(2L,""));
+        husband.setStudentId("RU 022014");
         // Жена
         Adult wife = new Adult("Петрова", "Вероника", "Алекссевна", LocalDate.of(1998, 3, 12));
         wife.setPassportSeria("" + (2000 + id));
@@ -85,6 +87,8 @@ public class SaveStudentOrder
         wife.setIssueDepartment(ps2);
         wife.setStudentId("" + (200000 + id));
         wife.setAddress(address);
+        wife.setUniversity(new University(1L,""));
+        wife.setStudentId("RU 012011");
         // Ребенок
         Child child1 = new Child("Петрова", "Ирина", "Викторовна", LocalDate.of(2018, 6, 29));
         child1.setCertificateNumber("" + (300000 + id));
