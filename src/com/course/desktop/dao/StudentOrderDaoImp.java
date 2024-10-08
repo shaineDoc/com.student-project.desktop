@@ -6,6 +6,7 @@ import com.course.desktop.exception.DaoException;
 import com.course.desktop.offices.PassportOffice;
 import com.course.desktop.offices.RegisterOffice;
 
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -44,25 +45,22 @@ public class StudentOrderDaoImp implements StudentOrderDao {
                     " ?, ?)";
 
     private static final String SELECT_ORDERS =
-            "SELECT * FROM jc_student_order_status = 0 ORDER BY student_order_date";
+            "SELECT * FROM jc_student_order WHERE student_order_status = 0  ORDER BY student_order_date";
 
     // TODO refactoring - make one method
     private Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(
+        return DriverManager.getConnection(
                 Config.getProperty(Config.DB_URL),
                 Config.getProperty(Config.DB_LOGIN),
                 Config.getProperty(Config.DB_PASSWORD));
-        return connection;
     }
 
     @Override
     public Long saveStudentOrder(StudentOrder so) throws DaoException {
-        Long result = -1L;
+        long result = -1L;
         try (Connection connection = getConnection();
-             //TODO: прочесть подробнее про PreparedStatement
              PreparedStatement stmt = connection.prepareStatement(INSERT_ORDER, new String[]{"student_order_id"})) {
 
-            //TODO: прочесть подробнее про connection.setAutoCommit(false);
             connection.setAutoCommit(false);
             try {
                 // основные параметры
@@ -109,12 +107,45 @@ public class StudentOrderDaoImp implements StudentOrderDao {
                 fillStudentOrder(rs, so);
                 fillMarriage(rs, so);
                 result.add(so);
+                Adult husband = fillAdult (rs, "h_");
+                Adult wife = fillAdult (rs, "w_");
+                so.setHusband(husband);
+                so.setWife(wife);
             }
             rs.close();
         } catch (SQLException ex) {
             throw new DaoException(ex);
         }
         return result;
+    }
+
+    private Adult fillAdult(ResultSet rs, String prefix) throws SQLException {
+        Adult adult = new Adult();
+        adult.setSurName(rs.getString(prefix + "sur_name"));
+        adult.setGivenName(rs.getString(prefix + "given_name"));
+        adult.setDateOfBirth(rs.getDate(prefix + "date_of_birth").toLocalDate());
+        adult.setPatronymic(rs.getString(prefix + "patronymic"));
+        adult.setPassportSeria(rs.getString(prefix + "passport_seria"));
+        adult.setPassportNumber(rs.getString(prefix + "passport_number"));
+        adult.setIssueDate(rs.getDate(prefix + "passport_date").toLocalDate());
+        PassportOffice passportOffice = new PassportOffice(rs.getLong(prefix
+                + "passport_office_id"), "", "");
+        adult.setIssueDepartment(passportOffice);
+        Address address = new Address();
+        Street street = new Street(rs.getLong(prefix + "street_code"), "");
+        address.setStreet(street);
+        address.setPostCode(rs.getString(prefix + "post_index"));
+        address.setBuilding(rs.getString(prefix + "building"));
+        address.setExtension(rs.getString(prefix + "extension"));
+        address.setApartment(rs.getString(prefix + "apartment"));
+        adult.setAddress(address);
+        University university = new University(rs.getLong(prefix + "university_id") ,"");
+        adult.setUniversity(university);
+        adult.setStudentId(rs.getString(prefix + "student_number"));
+
+
+        return adult;
+
     }
 
     private void fillStudentOrder(ResultSet rs, StudentOrder so) throws SQLException {
@@ -127,7 +158,7 @@ public class StudentOrderDaoImp implements StudentOrderDao {
         so.setMarriageCertificateId(rs.getString("certificate_id"));
         so.setMarriageDate(rs.getDate("marriage_date").toLocalDate());
 
-        Long roId = rs.getLong("marriage_office_id");
+        long roId = rs.getLong("register_office_id");
         RegisterOffice ro = new RegisterOffice(roId,"","");
         so.setMarriageOffice(ro);
     }

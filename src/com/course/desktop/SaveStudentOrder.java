@@ -39,14 +39,14 @@ public class SaveStudentOrder {
 //        for( CountryArea countryArea : ca4) {
 //            System.out.println(countryArea.getAreaId() + ":" + countryArea.getAreaName());
 //        }
-        StudentOrder s = buildStudentOrder(10);
+       // StudentOrder s = buildStudentOrder(10);
         StudentOrderDao dao = new StudentOrderDaoImp();
-        Long id = dao.saveStudentOrder(s);
-        System.out.println(id);
+      //  Long id = dao.saveStudentOrder(s);
+       // System.out.println(id);
 
         List<StudentOrder> soList = dao.getStudentOrders();
         for (StudentOrder so : soList) {
-            System.out.println(so.getStudentOrderId());
+            System.out.println("student order id: " + so.getStudentOrderId());
         }
 //        StudentOrder so = new StudentOrder();
 //        long ans = saveStudentOrder(so);
